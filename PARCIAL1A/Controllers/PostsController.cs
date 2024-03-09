@@ -47,33 +47,18 @@ namespace PARCIAL1A.Controllers
 
             return Ok(post);
         }
-        
-        [HttpGet]
-        [Route("GetById/{rol}")]
-
-        public IActionResult Get(int rol)
-        {
-            usuarios? usuario = (from e in _blogDBContext.usuarios where e.rolId == rol select e).FirstOrDefault();
-
-            if (usuario == null)
-            {
-                return NotFound();
-            }
-
-            return Ok(usuario);
-        }
 
         [HttpPost]
         [Route("Add")]
 
-        public IActionResult GuardarUsuario([FromBody] usuarios usuario)
+        public IActionResult GuardarPost([FromBody] Posts post)
         {
             try
             {
 
-                _blogDBContext.usuarios.Add(usuario);
-                _blogDBContext.SaveChanges();
-                return Ok(usuario);
+                _Parcial1ADBContext.Posts.Add(post);
+                _Parcial1ADBContext.SaveChanges();
+                return Ok(post);
 
             }
             catch (Exception ex)
@@ -85,41 +70,40 @@ namespace PARCIAL1A.Controllers
         [HttpPut]
         [Route("actualizar/{id}")]
 
-        public IActionResult ActualizarUsuarios(int id, [FromBody] usuarios usuariosModificar)
+        public IActionResult ActualizarPost(int id, [FromBody] Posts postsModificar)
         {
-            usuarios? usuarioActual = (from e in _blogDBContext.usuarios where e.usuarioId == id select e).FirstOrDefault();
+            Posts? postActual = (from e in _Parcial1ADBContext.Posts where e.Id == id select e).FirstOrDefault();
 
-            if (usuarioActual == null)
+            if (postActual == null)
             {
                 return NotFound();
             }
 
-            usuarioActual.rolId = usuariosModificar.rolId;
-            usuarioActual.nombreUsuario = usuariosModificar.nombreUsuario;
-            usuarioActual.clave = usuariosModificar.clave;
-            usuarioActual.nombre = usuariosModificar.nombre;
-            usuarioActual.apellido = usuariosModificar.apellido;
+            postActual.Titulo = postsModificar.Titulo;
+            postActual.Contenido = postsModificar.Contenido;
+            postActual.FechaPublicacion = postsModificar.FechaPublicacion;
+            postActual.AutorId = postsModificar.AutorId;
 
-            return Ok(usuariosModificar);
+            return Ok(postsModificar);
         }
 
         [HttpDelete]
         [Route("Eliminar/{id}")]
 
-        public IActionResult EliminarUsuarios(int id)
+        public IActionResult EliminarPost(int id)
         {
-            usuarios? usuario = (from e in _blogDBContext.usuarios where e.usuarioId == id select e).FirstOrDefault();
+            Posts? post = (from e in _Parcial1ADBContext.Posts where e.Id == id select e).FirstOrDefault();
 
-            if (usuario == null)
+            if (post == null)
             {
                 return NotFound();
             }
 
-            _blogDBContext.usuarios.Attach(usuario);
-            _blogDBContext.usuarios.Remove(usuario);
-            _blogDBContext.SaveChanges();
+            _Parcial1ADBContext.Posts.Attach(post);
+            _Parcial1ADBContext.Posts.Remove(post);
+            _Parcial1ADBContext.SaveChanges();
 
-            return Ok(usuario);
+            return Ok(post);
         }
 
 
