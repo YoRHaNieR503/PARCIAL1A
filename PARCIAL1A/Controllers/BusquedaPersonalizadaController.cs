@@ -37,6 +37,31 @@ namespace PARCIAL1A.Controllers
             }
             return Ok(listadoLibros);
         }
+
+        [HttpGet]
+        [Route("GetAll/{libro}")]
+        public IActionResult GetPostByLibros(string libro)
+        {
+            var listadoPosts = (from e in _parcial1ADBContext.Libros
+                                          join au in _parcial1ADBContext.AutorLibro
+                                          on e.Id equals au.LibroId
+                                          join auto in _parcial1ADBContext.Autores
+                                          on au.AutorId equals auto.Id
+                                          join post in _parcial1ADBContext.Posts
+                                          on au.AutorId equals post.AutorId
+                                          where e.Titulo == libro
+                                          select post).ToList();
+
+
+
+            if (listadoPosts.Count() == 0)
+            {
+                return NotFound();
+            }
+            return Ok(listadoPosts);
+        }
+
+
     }
 
 }
