@@ -47,7 +47,7 @@ namespace PARCIAL1A.Controllers
 
             return Ok(post);
         }
-        /*
+        
         [HttpGet]
         [Route("GetById/{rol}")]
 
@@ -126,6 +126,6 @@ namespace PARCIAL1A.Controllers
 
 
     }
-*/
+
 
 }
