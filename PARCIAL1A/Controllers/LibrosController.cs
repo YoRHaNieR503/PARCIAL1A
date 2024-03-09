@@ -55,7 +55,7 @@ namespace PARCIAL1A.Controllers
             try
             {
 
-                _Parcial1ADBContext.Posts.Add(libro);
+                _Parcial1ADBContext.Libros.Add(libro);
                 _Parcial1ADBContext.SaveChanges();
                 return Ok(libro);
 
@@ -89,20 +89,20 @@ namespace PARCIAL1A.Controllers
         [HttpDelete]
         [Route("Eliminar/{id}")]
 
-        public IActionResult EliminarPost(int id)
+        public IActionResult EliminarLibro(int id)
         {
-            Posts? post = (from e in _Parcial1ADBContext.Posts where e.Id == id select e).FirstOrDefault();
+            Libros? libro = (from e in _Parcial1ADBContext.Libros where e.Id == id select e).FirstOrDefault();
 
-            if (post == null)
+            if (libro == null)
             {
                 return NotFound();
             }
 
-            _Parcial1ADBContext.Posts.Attach(post);
-            _Parcial1ADBContext.Posts.Remove(post);
+            _Parcial1ADBContext.Libros.Attach(libro);
+            _Parcial1ADBContext.Libros.Remove(libro);
             _Parcial1ADBContext.SaveChanges();
 
-            return Ok(post);
+            return Ok(libro);
         }
 
 
@@ -110,5 +110,4 @@ namespace PARCIAL1A.Controllers
 
     }
 
-}
 }
