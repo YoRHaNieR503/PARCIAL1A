@@ -18,8 +18,8 @@ namespace PARCIAL1A.Controllers
 
 
         [HttpGet]
-        [Route("GetAll")]
-        public IActionResult Get(string nombre)
+        [Route("GetAll/{LibroAutorName}")]
+        public IActionResult GetLibroByAutor(string nombre)
         {
             List<Libros> listadoLibros = (from e in _parcial1ADBContext.Libros 
                                           join au in _parcial1ADBContext.AutorLibro
@@ -62,6 +62,8 @@ namespace PARCIAL1A.Controllers
         }
 
         [HttpGet]
+
+        [Route("GetAll/{Last20Posts}")]
         public IActionResult GetLast20Posts(string Nombre)
         {
             List<Posts> last20Posts = (from p in _parcial1ADBContext.Posts
