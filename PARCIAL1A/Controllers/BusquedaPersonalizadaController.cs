@@ -61,6 +61,24 @@ namespace PARCIAL1A.Controllers
             return Ok(listadoPosts);
         }
 
+        [HttpGet]
+        public IActionResult GetLast20Posts(string Nombre)
+        {
+            List<Posts> last20Posts = (from p in _parcial1ADBContext.Posts
+                                       join a in _parcial1ADBContext.Autores on p.AutorId equals a.Id
+                                       where a.Nombre == Nombre
+                                       orderby p.FechaPublicacion descending
+                                       select p)
+                                       .Take(20)
+                                       .ToList();
+
+            if (last20Posts.Count() == 0)
+            {
+                return NotFound();
+            }
+            return Ok(last20Posts);
+        }
+
 
     }
 
